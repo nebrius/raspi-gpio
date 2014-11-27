@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 
 import { Peripheral } from 'raspi-peripheral';
-import addon from './build/Release/addon';
+import addon from '../build/Release/addon';
 
 export var INPUT = 0;
 export var OUTPUT = 1;
@@ -35,16 +35,16 @@ export var PULL_NONE = 0;
 export var PULL_UP = 1;
 export var PULL_DOWN = 2;
 
-addon.setCallback(function(pin, value) {
+/*addon.setCallback(function(pin, value) {
   if (pinInstances[pin]) {
     pinInstances[pin].emit('change', value);
   }
-});
+});*/
 
 function parseConfig(config) {
   var pin;
   var pullResistor;
-  if (typeof config == 'number') {
+  if (typeof config == 'number' || typeof config == 'string') {
     pin = config;
     pullResistor = PULL_NONE;
   } else if (typeof config == 'object') {
@@ -53,9 +53,8 @@ function parseConfig(config) {
     if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) == -1) {
       throw new Error('Invalid pull resistor option ' + pullResistor);
     }
-  }
-  if (pinInstances[pin]) {
-    throw new Error('Pin ' + pin + ' is already in use. Release that instance before instantiating.');
+  } else {
+    throw new Error('Invalid pin or configuration');
   }
   return {
     pin: pin,
@@ -81,7 +80,7 @@ export class DigitalOutput extends Peripheral {
   }
 }
 
-export class DigitalOutput extends Peripheral {
+export class DigitalInput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
     super(config.pin);

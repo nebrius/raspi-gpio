@@ -22,38 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include <wiringPi.h>
 #include <node.h>
 #include <nan.h>
+#include <wiringPi.h>
 #include "./write.h"
 
-using v8::Function;
-using v8::Local;
-using v8::Null;
-using v8::Number;
-using v8::Value;
-
-class InitWorker : public NanAsyncWorker {
- public:
-
-  InitWorker(NanCallback *callback) : NanAsyncWorker(callback) {}
-
-  ~InitWorker() {}
-
-  void Execute () {
-    wiringPiSetupGpio();
-  }
-
-  void HandleOKCallback () {
-    NanScope();
-    Local<Value> argv[] = {};
-    callback->Call(0, argv);
-  }
-};
-
-NAN_METHOD(init) {
+NAN_METHOD(write) {
   NanScope();
-  NanCallback *callback = new NanCallback(args[0].As<Function>());
-  NanAsyncQueueWorker(new InitWorker(callback));
+
+  int pin = args[0]->Int32Value();
+  int value = args[1]->Int32Value();
+
+  digitalWrite(pin, value);
+
   NanReturnUndefined();
 }

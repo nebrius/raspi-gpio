@@ -21,3 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
+#include <node.h>
+#include <nan.h>
+#include <wiringPi.h>
+#include "./read.h"
+
+using v8::Number;
+
+NAN_METHOD(read) {
+  NanScope();
+
+  int pin = args[0]->Int32Value();
+  int value = digitalRead(pin);
+
+  NanReturnValue(NanNew<Number>(value));
+}
