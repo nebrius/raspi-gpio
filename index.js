@@ -88,4 +88,8 @@ export class DigitalOutput extends Peripheral {
     addon.init(this.pin, config.pullResistor, INPUT);
     this.value = addon.read(this.pin);
   }
+
+  read() {
+    return this.value = addon.read(this.pin);
+  }
 }
