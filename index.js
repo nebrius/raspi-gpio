@@ -35,12 +35,6 @@ export var PULL_NONE = 0;
 export var PULL_UP = 1;
 export var PULL_DOWN = 2;
 
-/*addon.setCallback(function(pin, value) {
-  if (pinInstances[pin]) {
-    pinInstances[pin].emit('change', value);
-  }
-});*/
-
 function parseConfig(config) {
   var pin;
   var pullResistor;

@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include <node.h>
 #include <nan.h>
-//#include "setCallback.h"
 #include "init.h"
 #include "write.h"
 #include "read.h"
@@ -35,8 +34,6 @@ using v8::Object;
 using v8::String;
 
 void InitAll(Handle<Object> exports) {
-  /*exports->Set(NanNew<String>("setCallback"),
-    NanNew<FunctionTemplate>(setCallback)->GetFunction());*/
   exports->Set(NanNew<String>("init"),
     NanNew<FunctionTemplate>(init)->GetFunction());
   exports->Set(NanNew<String>("write"),

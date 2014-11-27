@@ -1,7 +1,7 @@
 Raspi GPIO
 ==========
 
-
+Node.js interface for the GPIO on the Raspberry Pi. Docs coming soon!
 
 License
 =======
