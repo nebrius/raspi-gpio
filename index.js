@@ -36,13 +36,13 @@ export var PULL_UP = 1;
 export var PULL_DOWN = 2;
 
 function parseConfig(config) {
-  var pin;
+  var pins;
   var pullResistor;
   if (typeof config == 'number' || typeof config == 'string') {
-    pin = config;
+    pins = config;
     pullResistor = PULL_NONE;
   } else if (typeof config == 'object') {
-    pin = config.pin;
+    pins = config.pins;
     pullResistor = config.pullResistor || PULL_NONE;
     if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) == -1) {
       throw new Error('Invalid pull resistor option ' + pullResistor);
@@ -51,7 +51,7 @@ function parseConfig(config) {
     throw new Error('Invalid pin or configuration');
   }
   return {
-    pin: pin,
+    pins: pins,
     pullResistor: pullResistor
   };
 }
@@ -59,8 +59,8 @@ function parseConfig(config) {
 export class DigitalOutput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
-    super(config.pin);
-    addon.init(this.pin, config.pullResistor, OUTPUT);
+    super(config.pins);
+    addon.init(this.pins[0], config.pullResistor, OUTPUT);
   }
 
   write(value) {
@@ -70,19 +70,19 @@ export class DigitalOutput extends Peripheral {
     if ([LOW, HIGH].indexOf(value) == -1) {
       throw new Error('Invalid write value ' + value);
     }
-    addon.write(this.pin, value);
+    addon.write(this.pins[0], value);
   }
 }
 
 export class DigitalInput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
-    super(config.pin);
-    addon.init(this.pin, config.pullResistor, INPUT);
-    this.value = addon.read(this.pin);
+    super(config.pins[0]);
+    addon.init(this.pins[0], config.pullResistor, INPUT);
+    this.value = addon.read(this.pins[0]);
   }
 
   read() {
-    return this.value = addon.read(this.pin);
+    return this.value = addon.read(this.pins[0]);
   }
 }
