@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013-2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
+Copyright (c)2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -83,6 +83,9 @@ export class DigitalInput extends Peripheral {
   }
 
   read() {
+    if (!this.alive) {
+      throw new Error('Attempted to read from a destroyed peripheral');
+    }
     return this.value = addon.read(this.pins[0]);
   }
 }
