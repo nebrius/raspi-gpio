@@ -1,7 +1,196 @@
 Raspi GPIO
 ==========
 
-Node.js interface for the GPIO on the Raspberry Pi. Docs coming soon!
+Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/bryan-m-hughes/raspi-core) that provides access to the hardware GPIO pins.
+
+## Installation
+
+Install with NPM:
+
+```Shell
+npm install raspi-gpio
+```
+
+In rare cases, you may need to install [node-gyp](https://www.npmjs.org/package/node-gyp) manually:
+
+```Shell
+npm install -g node-gyp
+```
+
+## Example Usage
+
+```JavaScript
+var core = require('raspi-core');
+var gpio = require('raspi-gpio');
+
+core.init(function() {
+  var input = new gpio.DigitalInput({
+    pin: 'P1-3',
+    pullResistor: gpio.PULL_UP
+  });
+  var output = new gpio.DigitalOutput('P1-5');
+ 
+  output.write(input.read());
+});
+```
+
+## API
+
+### Module Constants
+
+<table>
+  <thead>
+    <tr>
+      <th>Constant</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>LOW</td>
+    <td>A logic low value, one of the two possible return values from digital reads and arguments to digital writes</td>
+  </tr>
+  <tr>
+    <td>HIGH</td>
+    <td>A logic high value, one of the two possible return values from digital reads and arguments to digital writes</td>
+  </tr>
+  <tr>
+    <td>PULL_NONE</td>
+    <td>Do not use a pull up or pull down resistor with a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+  </tr>
+  <tr>
+    <td>PULL_DOWN</td>
+    <td>Use the internal pull down resistor for a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+  </tr>
+  <tr>
+    <td>PULL_UP</td>
+    <td>Use the internal pull up resistor for a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+  </tr>
+</table>
+
+### new DigitalInput(config)
+
+Instantiates a new GPIO input instance.
+
+_Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>config</td>
+    <td>Number | String | Object</td>
+    <td>The configuration for the GPIO pin. If the config is a number or string, it is assumed to be the pin number for the peripheral. If it is an object, the following properties are supported:</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="2">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>pin</td>
+          <td>Number | String</td>
+          <td>The pin number for the peripheral</td>
+        </tr>
+        <tr>
+          <td>pullResistor</td>
+          <td>```PULL_NONE``` | ```PULL_DOWN``` | ```PULL_UP```</td>
+          <td>Which internal pull resistor to enable, if any. Defaults to ```PULL_NONE```</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+### DigitalInput Instance Methods
+
+#### read()
+
+Reads the current value on the pin.
+
+_Arguments_: None
+
+_Returns_: LOW or HIGH
+
+### new DigitalOutput(config)
+
+Instantiates a new GPIO output instance.
+
+_Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>config</td>
+    <td>Number | String | Object</td>
+    <td>The configuration for the GPIO pin. If the config is a number or string, it is assumed to be the pin number for the peripheral. If it is an object, the following properties are supported:</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="2">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>pin</td>
+          <td>Number | String</td>
+          <td>The pin number for the peripheral</td>
+        </tr>
+        <tr>
+          <td>pullResistor</td>
+          <td>```PULL_NONE``` | ```PULL_DOWN``` | ```PULL_UP```</td>
+          <td>Which internal pull resistor to enable, if any. Defaults to ```PULL_NONE```</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+### DigitalOutput Instance Methods
+
+#### write(value)
+
+Writes the given value to the pin.
+
+_Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>value</td>
+    <td>HIGH | LOW</td>
+    <td>The value to write to the pin</td>
+  </tr>
+</table>
+
+_Returns_: None
 
 License
 =======

@@ -25,8 +25,8 @@ THE SOFTWARE.
 import { Peripheral } from 'raspi-peripheral';
 import addon from '../build/Release/addon';
 
-export var INPUT = 0;
-export var OUTPUT = 1;
+var INPUT = 0;
+var OUTPUT = 1;
 
 export var LOW = 0;
 export var HIGH = 1;
@@ -36,13 +36,13 @@ export var PULL_UP = 1;
 export var PULL_DOWN = 2;
 
 function parseConfig(config) {
-  var pins;
+  var pin;
   var pullResistor;
   if (typeof config == 'number' || typeof config == 'string') {
-    pins = config;
+    pin = config;
     pullResistor = PULL_NONE;
   } else if (typeof config == 'object') {
-    pins = config.pins;
+    pin = config.pin;
     pullResistor = config.pullResistor || PULL_NONE;
     if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) == -1) {
       throw new Error('Invalid pull resistor option ' + pullResistor);
@@ -51,7 +51,7 @@ function parseConfig(config) {
     throw new Error('Invalid pin or configuration');
   }
   return {
-    pins: pins,
+    pin: pin,
     pullResistor: pullResistor
   };
 }
@@ -59,7 +59,7 @@ function parseConfig(config) {
 export class DigitalOutput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
-    super(config.pins);
+    super(config.pin);
     addon.init(this.pins[0], config.pullResistor, OUTPUT);
   }
 
@@ -77,7 +77,7 @@ export class DigitalOutput extends Peripheral {
 export class DigitalInput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
-    super(config.pins[0]);
+    super(config.pin);
     addon.init(this.pins[0], config.pullResistor, INPUT);
     this.value = addon.read(this.pins[0]);
   }
