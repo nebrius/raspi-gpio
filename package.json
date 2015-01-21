@@ -1,10 +1,10 @@
 {
   "name": "raspi-gpio",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "lib/index.js",
   "dependencies": {
-    "nan": "^1.4.0",
+    "nan": "1.4.x",
     "raspi-peripheral": "^1.0.1"
   },
   "devDependencies": {
