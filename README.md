@@ -5,6 +5,8 @@ Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/bryan
 
 ## Installation
 
+First, be sure that you have installed [raspi-core](https://github.com/bryan-m-hughes/raspi-core).
+
 Install with NPM:
 
 ```Shell
