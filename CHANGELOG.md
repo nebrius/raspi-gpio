@@ -1,3 +1,7 @@
+## 1.0.5 (2015-2-12)
+
+- Updated the README to reflect the change to Raspi.js
+
 ## 1.0.4 (2015-1-21)
 
 - Locked down the NAN version for now since code breaks on 1.5

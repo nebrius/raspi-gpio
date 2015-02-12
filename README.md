@@ -1,11 +1,11 @@
 Raspi GPIO
 ==========
 
-Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/bryan-m-hughes/raspi-core) that provides access to the hardware GPIO pins.
+Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/bryan-m-hughes/raspi) that provides access to the hardware GPIO pins on a Raspberry Pi.
 
 ## Installation
 
-First, be sure that you have installed [raspi-core](https://github.com/bryan-m-hughes/raspi-core).
+First, be sure that you have installed [Raspi.js](https://github.com/bryan-m-hughes/raspi).
 
 Install with NPM:
 
@@ -22,10 +22,10 @@ npm install -g node-gyp
 ## Example Usage
 
 ```JavaScript
-var core = require('raspi-core');
+var raspi = require('raspi');
 var gpio = require('raspi-gpio');
 
-core.init(function() {
+raspi.init(function() {
   var input = new gpio.DigitalInput({
     pin: 'P1-3',
     pullResistor: gpio.PULL_UP
