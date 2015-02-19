@@ -1,3 +1,8 @@
+## 1.1.0 (2015-
+
+- Upgraded NAN to get support for Node.js 0.12
+  - io.js support is theoretically there, but won't work until https://github.com/TooTallNate/node-gyp/pull/564 is landed
+
 ## 1.0.5 (2015-2-12)
 
 - Updated the README to reflect the change to Raspi.js

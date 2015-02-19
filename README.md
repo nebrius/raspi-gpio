@@ -13,12 +13,6 @@ Install with NPM:
 npm install raspi-gpio
 ```
 
-In rare cases, you may need to install [node-gyp](https://www.npmjs.org/package/node-gyp) manually:
-
-```Shell
-npm install -g node-gyp
-```
-
 ## Example Usage
 
 ```JavaScript
@@ -102,7 +96,7 @@ _Arguments_:
         <tr>
           <td>pin</td>
           <td>Number | String</td>
-          <td>The pin number for the peripheral</td>
+          <td>The pin number or descriptor for the peripheral</td>
         </tr>
         <tr>
           <td>pullResistor</td>
