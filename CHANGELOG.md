@@ -1,4 +1,8 @@
-## 1.1.0 (2015-
+## 1.2.0 (2015-2-21)
+
+- Switched from traceur to babel for ES6->ES5 compilation
+
+## 1.1.0 (2015-2-19)
 
 - Upgraded NAN to get support for Node.js 0.12
   - io.js support is theoretically there, but won't work until https://github.com/TooTallNate/node-gyp/pull/564 is landed
