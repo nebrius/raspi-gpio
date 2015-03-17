@@ -1,3 +1,7 @@
+## 1.2.1 (2015-3-17)
+
+- Dependency update to fix a bug with destroying peripherals
+
 ## 1.2.0 (2015-2-21)
 
 - Switched from traceur to babel for ES6->ES5 compilation
