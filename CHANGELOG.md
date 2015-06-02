@@ -1,3 +1,8 @@
+## 1.3.0 (2015-6-2)
+
+- Switched to using node-ffi for calling Wiring Pi.
+    - See https://github.com/nodejs/hardware/issues/11 for more info
+
 ## 1.2.1 (2015-3-17)
 
 - Dependency update to fix a bug with destroying peripherals
