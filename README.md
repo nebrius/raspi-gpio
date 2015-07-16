@@ -1,7 +1,11 @@
 Raspi GPIO
 ==========
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nebrius/raspi-io?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/bryan-m-hughes/raspi) that provides access to the hardware GPIO pins on a Raspberry Pi.
+
+If you have a bug report, feature request, or wish to contribute code, please be sure to check out the [Contributing Guide](blob/master/CONTRIBUTING.md).
 
 ## Installation
 

@@ -1,11 +1,11 @@
 {
   "name": "raspi-gpio",
-  "version": "1.2.1",
+  "version": "1.4.0",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "lib/index.js",
   "dependencies": {
     "nan": "1.6.x",
-    "raspi-peripheral": "1.1.1"
+    "raspi-peripheral": "1.2.1"
   },
   "devDependencies": {
     "del": "^1.1.1",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bryan-m-hughes/raspi-gpio.git"
+    "url": "https://github.com/nebrius/raspi-gpio.git"
   },
   "keywords": [
     "nodebots",
@@ -29,7 +29,7 @@
   "license": "MIT",
   "gypfile": true,
   "bugs": {
-    "url": "https://github.com/bryan-m-hughes/raspi-gpio/issues"
+    "url": "https://github.com/nebrius/raspi-gpio/issues"
   },
-  "homepage": "https://github.com/bryan-m-hughes/raspi-gpio"
+  "homepage": "https://github.com/nebrius/raspi-gpio"
 }

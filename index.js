@@ -25,19 +25,19 @@ THE SOFTWARE.
 import { Peripheral } from 'raspi-peripheral';
 import addon from '../build/Release/addon';
 
-var INPUT = 0;
-var OUTPUT = 1;
+const INPUT = 0;
+const OUTPUT = 1;
 
-export var LOW = 0;
-export var HIGH = 1;
+export const LOW = 0;
+export const HIGH = 1;
 
-export var PULL_NONE = 0;
-export var PULL_UP = 1;
-export var PULL_DOWN = 2;
+export const PULL_NONE = 0;
+export const PULL_UP = 1;
+export const PULL_DOWN = 2;
 
 function parseConfig(config) {
-  var pin;
-  var pullResistor;
+  let pin;
+  let pullResistor;
   if (typeof config == 'number' || typeof config == 'string') {
     pin = config;
     pullResistor = PULL_NONE;
@@ -51,8 +51,8 @@ function parseConfig(config) {
     throw new Error('Invalid pin or configuration');
   }
   return {
-    pin: pin,
-    pullResistor: pullResistor
+    pin,
+    pullResistor
   };
 }
 
@@ -86,6 +86,7 @@ export class DigitalInput extends Peripheral {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');
     }
-    return this.value = addon.read(this.pins[0]);
+    this.value = addon.read(this.pins[0]);
+    return this.value;
   }
 }

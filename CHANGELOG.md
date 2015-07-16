@@ -1,3 +1,18 @@
+## 1.4.0 (2015-7-16)
+
+- Reverted the changes in 1.3.0
+  - The performance tradeoffs weren't worth the ease of installation, sadly
+- Updated dependencies
+- Updated the repository links to point to their new location
+- Added a contributing guide
+- Added code linter
+- Update code style to use newer best practices
+
+## 1.3.0 (2015-6-2)
+
+- Switched to using node-ffi for calling Wiring Pi.
+    - See https://github.com/nodejs/hardware/issues/11 for more info
+
 ## 1.2.1 (2015-3-17)
 
 - Dependency update to fix a bug with destroying peripherals
