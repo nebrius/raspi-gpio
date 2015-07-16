@@ -22,17 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import ffi from 'ffi';
 import { Peripheral } from 'raspi-peripheral';
-
-var wiringPi = ffi.Library('libwiringPi', {
-  pinMode: [ 'void', [ 'int', 'int' ] ],
-  pullUpDnControl: [ 'void', [ 'int', 'int' ]],
-  digitalRead: [ 'int', [ 'int' ]],
-  digitalWrite: [ 'void', [ 'int', 'int' ]],
-  analogRead: [ 'int', [ 'int' ]], // Not used
-  analogWrite: [ 'void', [ 'int', 'int' ]] // Not used
-});
+import addon from '../build/Release/addon';
 
 var INPUT = 0;
 var OUTPUT = 1;
@@ -69,8 +60,7 @@ export class DigitalOutput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
     super(config.pin);
-    wiringPi.pinMode(this.pins[0], OUTPUT);
-    wiringPi.pullUpDnControl(this.pins[0], config.pullResistor);
+    addon.init(this.pins[0], config.pullResistor, OUTPUT);
   }
 
   write(value) {
@@ -80,7 +70,7 @@ export class DigitalOutput extends Peripheral {
     if ([LOW, HIGH].indexOf(value) == -1) {
       throw new Error('Invalid write value ' + value);
     }
-    wiringPi.digitalWrite(this.pins[0], value);
+    addon.write(this.pins[0], value);
   }
 }
 
@@ -88,15 +78,14 @@ export class DigitalInput extends Peripheral {
   constructor(config) {
     config = parseConfig(config);
     super(config.pin);
-    wiringPi.pinMode(this.pins[0], INPUT);
-    wiringPi.pullUpDnControl(this.pins[0], config.pullResistor);
-    this.value = wiringPi.digitalRead(this.pins[0]);
+    addon.init(this.pins[0], config.pullResistor, INPUT);
+    this.value = addon.read(this.pins[0]);
   }
 
   read() {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');
     }
-    return this.value = wiringPi.digitalRead(this.pins[0]);
+    return this.value = addon.read(this.pins[0]);
   }
 }
