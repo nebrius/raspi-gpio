@@ -1,3 +1,7 @@
+## 1.4.1 (2015-9-3)
+
+- Dependency updates to fix a bug with pin aliasing
+
 ## 1.4.0 (2015-7-16)
 
 - Reverted the changes in 1.3.0
