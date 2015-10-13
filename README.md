@@ -29,7 +29,7 @@ raspi.init(function() {
     pullResistor: gpio.PULL_UP
   });
   var output = new gpio.DigitalOutput('P1-5');
- 
+
   output.write(input.read());
 });
 ```
@@ -205,7 +205,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Bryan Hughes bryan@theoreticalideations.com (https://theoreticalideations.com)
+Copyright (c) 2014 Bryan Hughes bryan@theoreticalideations.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
