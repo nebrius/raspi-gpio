@@ -30,14 +30,10 @@ THE SOFTWARE.
 using v8::Number;
 
 NAN_METHOD(init) {
-  NanScope();
-
-  int pin = args[0]->Int32Value();
-  int pullResistor = args[1]->Int32Value();
-  int mode = args[2]->Int32Value();
+  int pin = info[0]->Int32Value();
+  int pullResistor = info[1]->Int32Value();
+  int mode = info[2]->Int32Value();
 
   pinMode(pin, mode);
   pullUpDnControl(pin, pullResistor);
-
-  NanReturnUndefined();
 }

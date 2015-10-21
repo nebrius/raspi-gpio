@@ -28,12 +28,8 @@ THE SOFTWARE.
 #include "./write.h"
 
 NAN_METHOD(write) {
-  NanScope();
-
-  int pin = args[0]->Int32Value();
-  int value = args[1]->Int32Value();
+  int pin = info[0]->Int32Value();
+  int value = info[1]->Int32Value();
 
   digitalWrite(pin, value);
-
-  NanReturnUndefined();
 }

@@ -17,6 +17,8 @@ Install with NPM:
 npm install raspi-gpio
 ```
 
+**Warning**: this module requires GCC 4.8 or newer. This means that you should be running Raspbian Jesse or newer, released in September of 2015.
+
 ## Example Usage
 
 ```JavaScript
@@ -40,7 +42,7 @@ The pins on the Raspberry Pi are a little complicated. There are multiple header
 
 To help make it easier, you can specify pins in three ways. The first is to specify the pin by function, e.g. ```'GPIO18'```. The second way is to specify by pin number, which is specified in the form "P[header]-[pin]", e.g. ```'P1-7'```. The final way is specify the [Wiring Pi virtual pin number](http://wiringpi.com/pins/), e.g. ```7```. If you specify a number instead of a string, it is assumed to be a Wiring Pi number.
 
-Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki) on the supported models of the Raspberry Pi.
+Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki/Pin-Information) on the supported models of the Raspberry Pi.
 
 ## API
 

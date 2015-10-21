@@ -30,10 +30,8 @@ THE SOFTWARE.
 using v8::Number;
 
 NAN_METHOD(read) {
-  NanScope();
-
-  int pin = args[0]->Int32Value();
+  int pin = info[0]->Int32Value();
   int value = digitalRead(pin);
 
-  NanReturnValue(NanNew<Number>(value));
+  info.GetReturnValue().Set(Nan::New<Number>(value));
 }

@@ -34,12 +34,12 @@ using v8::Object;
 using v8::String;
 
 void InitAll(Handle<Object> exports) {
-  exports->Set(NanNew<String>("init"),
-    NanNew<FunctionTemplate>(init)->GetFunction());
-  exports->Set(NanNew<String>("write"),
-    NanNew<FunctionTemplate>(write)->GetFunction());
-  exports->Set(NanNew<String>("read"),
-    NanNew<FunctionTemplate>(read)->GetFunction());
+  exports->Set(Nan::New<String>("init").ToLocalChecked(),
+    Nan::New<FunctionTemplate>(init)->GetFunction());
+  exports->Set(Nan::New<String>("write").ToLocalChecked(),
+    Nan::New<FunctionTemplate>(write)->GetFunction());
+  exports->Set(Nan::New<String>("read").ToLocalChecked(),
+    Nan::New<FunctionTemplate>(read)->GetFunction());
 }
 
 NODE_MODULE(addon, InitAll)

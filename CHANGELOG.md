@@ -1,3 +1,10 @@
+## 2.0.0 (2015-10-19)
+
+- Upgraded to NAN 2
+  - POTENTIAL BREAKING CHANGE
+  - The API has not changed, but the build requirements have
+  - Make sure you are running Raspbian Jesse because this module no longer builds on stock Raspbian Wheezy
+
 ## 1.5.0 (2015-10-12)
 
 - Dependency updates to fix bug with invalid pin aliases
