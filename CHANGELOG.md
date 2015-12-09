@@ -1,3 +1,8 @@
+## 2.0.1 (2015-12-8)
+
+- Fixed a typo in the pull up/down constants
+- Updated dependencies to add Raspberry Pi Zero support
+
 ## 2.0.0 (2015-10-20)
 
 - Upgraded to NAN 2

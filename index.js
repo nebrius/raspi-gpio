@@ -32,8 +32,8 @@ export const LOW = 0;
 export const HIGH = 1;
 
 export const PULL_NONE = 0;
-export const PULL_UP = 1;
-export const PULL_DOWN = 2;
+export const PULL_DOWN = 1;
+export const PULL_UP = 2;
 
 function parseConfig(config) {
   let pin;
