@@ -1,3 +1,7 @@
+## 2.2.0 (2016-4-4)
+
+- Updated dependencies to add Raspberry Pi 3 Model B support
+
 ## 2.1.0 (2015-12-8)
 
 - Fixed a typo in the pull up/down constants
