@@ -1,4 +1,8 @@
-## 2.2.0 (2016-4-4)
+## 2.2.1 (2016-3-7)
+
+- Dependency update to add missing Raspberry Pi 3 Model B revision
+
+## 2.2.0 (2016-3-4)
 
 - Updated dependencies to add Raspberry Pi 3 Model B support
 
