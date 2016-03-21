@@ -1,4 +1,4 @@
-## 1.5.2 (2016-3-20)
+## 2.2.2 (2016-3-20)
 
 - Dependency update to fix bug
 - New build system
