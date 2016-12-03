@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
+Copyright (c) 2014 Bryan Hughes <bryan@nebri.us>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,5 @@ THE SOFTWARE.
 
 #include <node.h>
 #include <nan.h>
-#include <wiringPi.h>
-#include "./write.h"
 
-NAN_METHOD(write) {
-  int pin = info[0]->Int32Value();
-  int value = info[1]->Int32Value();
-
-  digitalWrite(pin, value);
-}
+NAN_METHOD(read);

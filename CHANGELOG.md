@@ -1,3 +1,8 @@
+## 2.3.1 (2016-12-3)
+
+- Converted the project to TypeScript and cleaned up a bunch of odds and ends
+  - Note: there is no functionality change or bug fixes with this release
+
 ## 2.3.0 (2016-7-7)
 
 - Switched dependency ranges to ^

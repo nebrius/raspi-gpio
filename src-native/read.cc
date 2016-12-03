@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
+Copyright (c) 2014 Bryan Hughes <bryan@nebri.us>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,14 @@ THE SOFTWARE.
 
 #include <node.h>
 #include <nan.h>
-#include "init.h"
-#include "write.h"
-#include "read.h"
+#include <wiringPi.h>
+#include "./read.h"
 
-using v8::FunctionTemplate;
-using v8::Handle;
-using v8::Object;
-using v8::String;
+using v8::Number;
 
-void InitAll(Handle<Object> exports) {
-  exports->Set(Nan::New<String>("init").ToLocalChecked(),
-    Nan::New<FunctionTemplate>(init)->GetFunction());
-  exports->Set(Nan::New<String>("write").ToLocalChecked(),
-    Nan::New<FunctionTemplate>(write)->GetFunction());
-  exports->Set(Nan::New<String>("read").ToLocalChecked(),
-    Nan::New<FunctionTemplate>(read)->GetFunction());
+NAN_METHOD(read) {
+  int pin = info[0]->Int32Value();
+  int value = digitalRead(pin);
+
+  info.GetReturnValue().Set(Nan::New<Number>(value));
 }
-
-NODE_MODULE(addon, InitAll)

@@ -23,7 +23,28 @@ THE SOFTWARE.
 */
 
 import { Peripheral } from 'raspi-peripheral';
-import addon from '../build/Release/addon';
+
+interface IAddon {
+  init(pin: number, pullResistor: number, mode: number): void;
+  read(pin: number): number;
+  write(pin: number, value: number): void;
+}
+
+export interface IConfig {
+  pin: number | string;
+  pullResistor?: number;
+}
+
+interface INormalizedConfig {
+  pin: number | string;
+  pullResistor: number;
+}
+
+// Creating type definition files for native code is...not so simple, so instead
+// we just disable tslint and trust that it works. It's not any less safe than
+// creating an external .d.ts file, and this way we don't have to move it around
+// tslint:disable-next-line
+const addon: IAddon = require('../build/Release/addon');
 
 const INPUT = 0;
 const OUTPUT = 1;
@@ -35,16 +56,16 @@ export const PULL_NONE = 0;
 export const PULL_DOWN = 1;
 export const PULL_UP = 2;
 
-function parseConfig(config) {
-  let pin;
-  let pullResistor;
-  if (typeof config == 'number' || typeof config == 'string') {
+function parseConfig(config: number | string | IConfig): INormalizedConfig {
+  let pin: number | string;
+  let pullResistor: number;
+  if (typeof config === 'number' || typeof config === 'string') {
     pin = config;
     pullResistor = PULL_NONE;
-  } else if (typeof config == 'object') {
+  } else if (typeof config === 'object') {
     pin = config.pin;
     pullResistor = config.pullResistor || PULL_NONE;
-    if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) == -1) {
+    if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) === -1) {
       throw new Error('Invalid pull resistor option ' + pullResistor);
     }
   } else {
@@ -57,17 +78,17 @@ function parseConfig(config) {
 }
 
 export class DigitalOutput extends Peripheral {
-  constructor(config) {
-    config = parseConfig(config);
-    super(config.pin);
-    addon.init(this.pins[0], config.pullResistor, OUTPUT);
+  constructor(config: number | string | IConfig) {
+    const parsedConfig = parseConfig(config);
+    super(parsedConfig.pin);
+    addon.init(this.pins[0], parsedConfig.pullResistor, OUTPUT);
   }
 
-  write(value) {
+  public write(value: number): void {
     if (!this.alive) {
       throw new Error('Attempted to write to a destroyed peripheral');
     }
-    if ([LOW, HIGH].indexOf(value) == -1) {
+    if ([LOW, HIGH].indexOf(value) === -1) {
       throw new Error('Invalid write value ' + value);
     }
     addon.write(this.pins[0], value);
@@ -75,14 +96,17 @@ export class DigitalOutput extends Peripheral {
 }
 
 export class DigitalInput extends Peripheral {
-  constructor(config) {
-    config = parseConfig(config);
-    super(config.pin);
-    addon.init(this.pins[0], config.pullResistor, INPUT);
+
+  public value: number;
+
+  constructor(config: number | string | IConfig) {
+    const parsedConfig = parseConfig(config);
+    super(parsedConfig.pin);
+    addon.init(this.pins[0], parsedConfig.pullResistor, INPUT);
     this.value = addon.read(this.pins[0]);
   }
 
-  read() {
+  public read(): number {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');
     }

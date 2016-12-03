@@ -2,10 +2,10 @@
   "targets": [{
     "target_name": "addon",
     "sources": [
-      "src/addon.cc",
-      "src/init.cc",
-      "src/write.cc",
-      "src/read.cc"
+      "src-native/addon.cc",
+      "src-native/init.cc",
+      "src-native/write.cc",
+      "src-native/read.cc"
     ],
     "include_dirs": [
       "<!(node -e \"require('nan')\")"
