@@ -67,15 +67,15 @@ Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki
   </tr>
   <tr>
     <td>PULL_NONE</td>
-    <td>Do not use a pull up or pull down resistor with a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+    <td>Do not use a pull up or pull down resistor with a pin, one of the three possible values for the <code>pullResistor</code> in the pin configuration object.</td>
   </tr>
   <tr>
     <td>PULL_DOWN</td>
-    <td>Use the internal pull down resistor for a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+    <td>Use the internal pull down resistor for a pin, one of the three possible values for the <code>pullResistor</code> in the pin configuration object.</td>
   </tr>
   <tr>
     <td>PULL_UP</td>
-    <td>Use the internal pull up resistor for a pin, one of the three possible values for the ```pullResistor``` in the pin configuration object.</td>
+    <td>Use the internal pull up resistor for a pin, one of the three possible values for the <code>pullResistor</code> in the pin configuration object.</td>
   </tr>
 </table>
 
@@ -116,8 +116,8 @@ _Arguments_:
         </tr>
         <tr>
           <td>pullResistor (optional)</td>
-          <td>```PULL_NONE``` | ```PULL_DOWN``` | ```PULL_UP```</td>
-          <td>Which internal pull resistor to enable, if any. Defaults to ```PULL_NONE```</td>
+          <td><code>PULL_NONE</code> | <code>PULL_DOWN</code> | <code>PULL_UP</code></td>
+          <td>Which internal pull resistor to enable, if any. Defaults to <code>PULL_NONE</code></td>
         </tr>
       </table>
     </td>
@@ -171,8 +171,8 @@ _Arguments_:
         </tr>
         <tr>
           <td>pullResistor</td>
-          <td>```PULL_NONE``` | ```PULL_DOWN``` | ```PULL_UP```</td>
-          <td>Which internal pull resistor to enable, if any. Defaults to ```PULL_NONE```</td>
+          <td><code>PULL_NONE</code> | <code>PULL_DOWN</code> | <code>PULL_UP</code></td>
+          <td>Which internal pull resistor to enable, if any. Defaults to <code>PULL_NONE</code></td>
         </tr>
       </table>
     </td>
