@@ -1,3 +1,8 @@
+## 3.0.0 (2017-1-5)
+
+- Added a `change` event that is emitted any time the value on the pin changes
+  - POTENTIALLY BREAKING CHANGE: If you `require` this module, even if you don't use it, it will prevent the Node process from exiting implicitly. You will have to call `process.exit` explicitly now.
+
 ## 2.3.1 (2016-12-3)
 
 - Converted the project to TypeScript and cleaned up a bunch of odds and ends

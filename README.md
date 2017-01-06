@@ -17,7 +17,9 @@ Install with NPM:
 npm install raspi-gpio
 ```
 
-_Warning_: this module requires GCC 4.8 or newer. This means that you should be running Raspbian Jessie or newer, released in September of 2015.
+**Warning:** this module requires GCC 4.8 or newer. This means that you should be running Raspbian Jessie or newer, released in September of 2015.
+
+**Note:** `require`ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call `process.exit()`.
 
 Note: this project is written in [TypeScript](http://www.typescriptlang.org/) and includes type definitions in the package.json file. This means that if you want to use it from TypeScript, you don't need to install a separate @types module.
 
@@ -132,7 +134,7 @@ Reads the current value on the pin.
 
 _Arguments_: None
 
-_Returns_: LOW or HIGH
+_Returns_: `LOW` or `HIGH`
 
 ### new DigitalOutput(config)
 
@@ -179,6 +181,29 @@ _Arguments_:
   </tr>
 </table>
 
+### DigitalInput Instance Events
+
+#### on('change', function(value))
+
+Fired whenever the value of the GPIO pin changes
+
+_Callback Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>value</td>
+    <td><code>LOW</code> | <code>HIGH</code></td>
+    <td>The data read from the serial port.</td>
+  </tr>
+</table>
+
 ### DigitalOutput Instance Methods
 
 #### write(value)
@@ -197,7 +222,7 @@ _Arguments_:
   </thead>
   <tr>
     <td>value</td>
-    <td>HIGH | LOW</td>
+    <td><code>HIGH</code> | <code>LOW</code></td>
     <td>The value to write to the pin</td>
   </tr>
 </table>

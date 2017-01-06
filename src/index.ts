@@ -26,6 +26,8 @@ import { Peripheral } from 'raspi-peripheral';
 
 interface IAddon {
   init(pin: number, pullResistor: number, mode: number): void;
+  setListener(cb: (pin: number, value: number) => void, nop: () => void): void;
+  enableListenerPin(pin: number): void;
   read(pin: number): number;
   write(pin: number, value: number): void;
 }
@@ -56,6 +58,20 @@ export const PULL_NONE = 0;
 export const PULL_DOWN = 1;
 export const PULL_UP = 2;
 
+const inputs: DigitalInput[] = [];
+
+addon.setListener((pin, value) => {
+  if (inputs[pin] && inputs[pin].alive) {
+    inputs[pin].emit('change', value);
+  }
+}, () => {}); // The second callback is not used, but has to be supplied
+
+// Ugly ugly hack because I can't seen to get another way to keep the process
+// from dying, even though we have persistent handles to everything. Without
+// this, we can't emit pin value change errors unless we get lucky and some
+// other piece of code keeps the process alive
+setInterval(() => {}, 100000);
+
 function parseConfig(config: number | string | IConfig): INormalizedConfig {
   let pin: number | string;
   let pullResistor: number;
@@ -82,6 +98,7 @@ export class DigitalOutput extends Peripheral {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
     addon.init(this.pins[0], parsedConfig.pullResistor, OUTPUT);
+    addon.enableListenerPin(this.pins[0]);
   }
 
   public write(value: number): void {
@@ -103,7 +120,9 @@ export class DigitalInput extends Peripheral {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
     addon.init(this.pins[0], parsedConfig.pullResistor, INPUT);
+    addon.enableListenerPin(this.pins[0]);
     this.value = addon.read(this.pins[0]);
+    inputs[this.pins[0]] = this;
   }
 
   public read(): number {

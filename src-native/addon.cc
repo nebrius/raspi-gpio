@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <node.h>
 #include <nan.h>
 #include "init.h"
+#include "listener.h"
 #include "write.h"
 #include "read.h"
 
@@ -36,6 +37,10 @@ using v8::String;
 void InitAll(Handle<Object> exports) {
   exports->Set(Nan::New<String>("init").ToLocalChecked(),
     Nan::New<FunctionTemplate>(init)->GetFunction());
+  exports->Set(Nan::New<String>("setListener").ToLocalChecked(),
+    Nan::New<FunctionTemplate>(setListener)->GetFunction());
+  exports->Set(Nan::New<String>("enableListenerPin").ToLocalChecked(),
+    Nan::New<FunctionTemplate>(enableListenerPin)->GetFunction());
   exports->Set(Nan::New<String>("write").ToLocalChecked(),
     Nan::New<FunctionTemplate>(write)->GetFunction());
   exports->Set(Nan::New<String>("read").ToLocalChecked(),

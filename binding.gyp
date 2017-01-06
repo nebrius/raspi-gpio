@@ -4,6 +4,7 @@
     "sources": [
       "src-native/addon.cc",
       "src-native/init.cc",
+      "src-native/listener.cc",
       "src-native/write.cc",
       "src-native/read.cc"
     ],

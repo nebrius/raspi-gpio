@@ -40,6 +40,17 @@ exports.HIGH = 1;
 exports.PULL_NONE = 0;
 exports.PULL_DOWN = 1;
 exports.PULL_UP = 2;
+var inputs = [];
+addon.setListener(function (pin, value) {
+    if (inputs[pin] && inputs[pin].alive) {
+        inputs[pin].emit('change', value);
+    }
+}, function () { }); // The second callback is not used, but has to be supplied
+// Ugly ugly hack because I can't seen to get another way to keep the process
+// from dying, even though we have persistent handles to everything. Without
+// this, we can't emit pin value change errors unless we get lucky and some
+// other piece of code keeps the process alive
+setInterval(function () { }, 100000);
 function parseConfig(config) {
     var pin;
     var pullResistor;
@@ -68,6 +79,7 @@ var DigitalOutput = (function (_super) {
         var parsedConfig = parseConfig(config);
         _super.call(this, parsedConfig.pin);
         addon.init(this.pins[0], parsedConfig.pullResistor, OUTPUT);
+        addon.enableListenerPin(this.pins[0]);
     }
     DigitalOutput.prototype.write = function (value) {
         if (!this.alive) {
@@ -87,7 +99,9 @@ var DigitalInput = (function (_super) {
         var parsedConfig = parseConfig(config);
         _super.call(this, parsedConfig.pin);
         addon.init(this.pins[0], parsedConfig.pullResistor, INPUT);
+        addon.enableListenerPin(this.pins[0]);
         this.value = addon.read(this.pins[0]);
+        inputs[this.pins[0]] = this;
     }
     DigitalInput.prototype.read = function () {
         if (!this.alive) {
