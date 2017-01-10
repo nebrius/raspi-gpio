@@ -19,9 +19,7 @@ npm install raspi-gpio
 
 **Warning:** this module requires GCC 4.8 or newer. This means that you should be running Raspbian Jessie or newer, released in September of 2015.
 
-**Note:** `require`ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call `process.exit()`.
-
-Note: this project is written in [TypeScript](http://www.typescriptlang.org/) and includes type definitions in the package.json file. This means that if you want to use it from TypeScript, you don't need to install a separate @types module.
+**Note:** this project is written in [TypeScript](http://www.typescriptlang.org/) and includes type definitions in the package.json file. This means that if you want to use it from TypeScript, you don't need to install a separate @types module.
 
 ## Example Usage
 
@@ -120,6 +118,14 @@ _Arguments_:
           <td>pullResistor (optional)</td>
           <td><code>PULL_NONE</code> | <code>PULL_DOWN</code> | <code>PULL_UP</code></td>
           <td>Which internal pull resistor to enable, if any. Defaults to <code>PULL_NONE</code></td>
+        </tr>
+        <tr>
+          <td>enableListener</td>
+          <td>Boolean</td>
+          <td>Indicates whether or not to enable the interrupt listener. When enabled, the pin instance will emit <code>change</code> events on both rising and falling edges. Defaults to <code>true</code>.
+
+            <em>Note:</em> When this flag is enabled, <code>require</code>ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call <code>process.exit()</code>.
+          </td>
         </tr>
       </table>
     </td>

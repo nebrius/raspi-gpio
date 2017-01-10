@@ -2,6 +2,7 @@ import { Peripheral } from 'raspi-peripheral';
 export interface IConfig {
     pin: number | string;
     pullResistor?: number;
+    enableListener?: boolean;
 }
 export declare const LOW: number;
 export declare const HIGH: number;

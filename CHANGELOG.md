@@ -1,3 +1,7 @@
+## 3.1.0 (2017-1-9)
+
+- Added an `enableListener` that defaults to `true`. When set to `false`, events are not emitted, but the process is also not held up so that it can exit without an explicit call to `process.exit`.
+
 ## 3.0.0 (2017-1-5)
 
 - Added a `change` event that is emitted any time the value on the pin changes

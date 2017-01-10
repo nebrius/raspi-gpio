@@ -35,11 +35,13 @@ interface IAddon {
 export interface IConfig {
   pin: number | string;
   pullResistor?: number;
+  enableListener?: boolean;
 }
 
 interface INormalizedConfig {
   pin: number | string;
   pullResistor: number;
+  enableListener: boolean;
 }
 
 // Creating type definition files for native code is...not so simple, so instead
@@ -60,36 +62,47 @@ export const PULL_UP = 2;
 
 const inputs: DigitalInput[] = [];
 
-addon.setListener((pin, value) => {
-  if (inputs[pin] && inputs[pin].alive) {
-    inputs[pin].emit('change', value);
+let hasSetListener = false;
+function setListener() {
+  if (hasSetListener) {
+    return;
   }
-}, () => {}); // The second callback is not used, but has to be supplied
+  hasSetListener = true;
+  addon.setListener((pin, value) => {
+    if (inputs[pin] && inputs[pin].alive) {
+      inputs[pin].emit('change', value);
+    }
+  }, () => {}); // The second callback is not used, but has to be supplied
 
-// Ugly ugly hack because I can't seen to get another way to keep the process
-// from dying, even though we have persistent handles to everything. Without
-// this, we can't emit pin value change errors unless we get lucky and some
-// other piece of code keeps the process alive
-setInterval(() => {}, 100000);
+  // Ugly ugly hack because I can't seen to get another way to keep the process
+  // from dying, even though we have persistent handles to everything. Without
+  // this, we can't emit pin value change errors unless we get lucky and some
+  // other piece of code keeps the process alive
+  setInterval(() => {}, 100000);
+}
 
 function parseConfig(config: number | string | IConfig): INormalizedConfig {
   let pin: number | string;
   let pullResistor: number;
+  let enableListener: boolean;
   if (typeof config === 'number' || typeof config === 'string') {
     pin = config;
     pullResistor = PULL_NONE;
+    enableListener = true;
   } else if (typeof config === 'object') {
     pin = config.pin;
     pullResistor = config.pullResistor || PULL_NONE;
     if ([ PULL_NONE, PULL_DOWN, PULL_UP].indexOf(pullResistor) === -1) {
       throw new Error('Invalid pull resistor option ' + pullResistor);
     }
+    enableListener = config.hasOwnProperty('enableListener') ? !!config.enableListener : true;
   } else {
     throw new Error('Invalid pin or configuration');
   }
   return {
     pin,
-    pullResistor
+    pullResistor,
+    enableListener
   };
 }
 
@@ -98,7 +111,10 @@ export class DigitalOutput extends Peripheral {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
     addon.init(this.pins[0], parsedConfig.pullResistor, OUTPUT);
-    addon.enableListenerPin(this.pins[0]);
+    if (parsedConfig.enableListener) {
+      setListener();
+      addon.enableListenerPin(this.pins[0]);
+    }
   }
 
   public write(value: number): void {
@@ -120,7 +136,10 @@ export class DigitalInput extends Peripheral {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
     addon.init(this.pins[0], parsedConfig.pullResistor, INPUT);
-    addon.enableListenerPin(this.pins[0]);
+    if (parsedConfig.enableListener) {
+      setListener();
+      addon.enableListenerPin(this.pins[0]);
+    }
     this.value = addon.read(this.pins[0]);
     inputs[this.pins[0]] = this;
   }
