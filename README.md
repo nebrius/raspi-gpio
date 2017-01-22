@@ -124,7 +124,7 @@ _Arguments_:
           <td>Boolean</td>
           <td>Indicates whether or not to enable the interrupt listener. When enabled, the pin instance will emit <code>change</code> events on both rising and falling edges. Defaults to <code>true</code>.
 
-            <em>Note:</em> When this flag is enabled, <code>require</code>ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call <code>process.exit()</code>.
+            <strong>Note:</strong> When this flag is enabled, <code>require</code>ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call <code>process.exit()</code>.
           </td>
         </tr>
       </table>
