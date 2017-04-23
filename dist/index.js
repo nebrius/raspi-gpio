@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c)2014 Bryan Hughes <bryan@nebri.us>
+Copyright (c) 2014 Bryan Hughes <bryan@nebri.us>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,50 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var raspi_peripheral_1 = require('raspi-peripheral');
-// Creating type definition files for native code is...not so simple, so instead
-// we just disable tslint and trust that it works. It's not any less safe than
-// creating an external .d.ts file, and this way we don't have to move it around
-// tslint:disable-next-line
-var addon = require('../build/Release/addon');
-var INPUT = 0;
-var OUTPUT = 1;
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var raspi_peripheral_1 = require("raspi-peripheral");
+var pigpio_1 = require("pigpio");
+var raspi_board_1 = require("raspi-board");
 exports.LOW = 0;
 exports.HIGH = 1;
-exports.PULL_NONE = 0;
-exports.PULL_DOWN = 1;
-exports.PULL_UP = 2;
-var inputs = [];
-var hasSetListener = false;
-function setListener() {
-    if (hasSetListener) {
-        return;
-    }
-    hasSetListener = true;
-    addon.setListener(function (pin, value) {
-        if (inputs[pin] && inputs[pin].alive) {
-            inputs[pin].emit('change', value);
-        }
-    }, function () { }); // The second callback is not used, but has to be supplied
-    // Ugly ugly hack because I can't seen to get another way to keep the process
-    // from dying, even though we have persistent handles to everything. Without
-    // this, we can't emit pin value change errors unless we get lucky and some
-    // other piece of code keeps the process alive
-    setInterval(function () { }, 100000);
-}
+exports.PULL_NONE = pigpio_1.Gpio.PUD_OFF;
+exports.PULL_DOWN = pigpio_1.Gpio.PUD_DOWN;
+exports.PULL_UP = pigpio_1.Gpio.PUD_UP;
 function parseConfig(config) {
     var pin;
     var pullResistor;
-    var enableListener;
     if (typeof config === 'number' || typeof config === 'string') {
         pin = config;
         pullResistor = exports.PULL_NONE;
-        enableListener = true;
     }
     else if (typeof config === 'object') {
         pin = config.pin;
@@ -73,27 +54,33 @@ function parseConfig(config) {
         if ([exports.PULL_NONE, exports.PULL_DOWN, exports.PULL_UP].indexOf(pullResistor) === -1) {
             throw new Error('Invalid pull resistor option ' + pullResistor);
         }
-        enableListener = config.hasOwnProperty('enableListener') ? !!config.enableListener : true;
     }
     else {
         throw new Error('Invalid pin or configuration');
     }
     return {
         pin: pin,
-        pullResistor: pullResistor,
-        enableListener: enableListener
+        pullResistor: pullResistor
     };
+}
+function getPin(alias, pin) {
+    var gpioPin = raspi_board_1.getGpioNumber(pin);
+    if (gpioPin === null) {
+        throw new Error("Internal error: " + alias + " was parsed as a valid pin, but couldn't be resolved to a GPIO pin");
+    }
+    return gpioPin;
 }
 var DigitalOutput = (function (_super) {
     __extends(DigitalOutput, _super);
     function DigitalOutput(config) {
+        var _this = this;
         var parsedConfig = parseConfig(config);
-        _super.call(this, parsedConfig.pin);
-        addon.init(this.pins[0], parsedConfig.pullResistor, OUTPUT);
-        if (parsedConfig.enableListener) {
-            setListener();
-            addon.enableListenerPin(this.pins[0]);
-        }
+        _this = _super.call(this, parsedConfig.pin) || this;
+        _this.output = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
+            mode: pigpio_1.Gpio.OUTPUT,
+            pullUpDown: parsedConfig.pullResistor
+        });
+        return _this;
     }
     DigitalOutput.prototype.write = function (value) {
         if (!this.alive) {
@@ -102,7 +89,9 @@ var DigitalOutput = (function (_super) {
         if ([exports.LOW, exports.HIGH].indexOf(value) === -1) {
             throw new Error('Invalid write value ' + value);
         }
-        addon.write(this.pins[0], value);
+        this.value = value;
+        this.output.digitalWrite(this.value);
+        this.emit('change', this.value);
     };
     return DigitalOutput;
 }(raspi_peripheral_1.Peripheral));
@@ -110,21 +99,26 @@ exports.DigitalOutput = DigitalOutput;
 var DigitalInput = (function (_super) {
     __extends(DigitalInput, _super);
     function DigitalInput(config) {
+        var _this = this;
         var parsedConfig = parseConfig(config);
-        _super.call(this, parsedConfig.pin);
-        addon.init(this.pins[0], parsedConfig.pullResistor, INPUT);
-        if (parsedConfig.enableListener) {
-            setListener();
-            addon.enableListenerPin(this.pins[0]);
-        }
-        this.value = addon.read(this.pins[0]);
-        inputs[this.pins[0]] = this;
+        _this = _super.call(this, parsedConfig.pin) || this;
+        _this.input = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
+            mode: pigpio_1.Gpio.INPUT,
+            pullUpDown: parsedConfig.pullResistor
+        });
+        _this.input.enableInterrupt(pigpio_1.Gpio.EITHER_EDGE);
+        _this.input.on('interrupt', function (level) { return setTimeout(function () {
+            _this.value = level;
+            _this.emit('change', _this.value);
+        }); });
+        _this.value = _this.input.digitalRead();
+        return _this;
     }
     DigitalInput.prototype.read = function () {
         if (!this.alive) {
             throw new Error('Attempted to read from a destroyed peripheral');
         }
-        this.value = addon.read(this.pins[0]);
+        this.value = this.input.digitalRead();
         return this.value;
     };
     return DigitalInput;

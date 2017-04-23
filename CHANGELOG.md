@@ -1,4 +1,12 @@
-## 3.1.1 (2017-22-1)
+## 4.0.0 (2017-4-22)
+
+- Rewrote raspi-gpio to use [pigpio](https://github.com/fivdi/pigpio) instead of Wiring Pi
+  - Digital Output was broken because of..._something_...I don't know what, but switching fixes it
+  - Moving away from Wiring Pi also gets rid of the compile step, which is nice (although pigpio has one)
+  - POTENTIALLY BREAKING CHANGE: While I strived to keep the API the same, it's _possible_ that there may be some slight timing differences, especially for inputs with rapidly changing signals
+- BREAKING CHANGE: Removed the `enableListener` option. Interrupts are always enabled now.
+
+## 3.1.1 (2017-1-22)
 
 - Publishing a new version to update the README on npmjs.com. No other changes.
 

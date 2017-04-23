@@ -24,18 +24,16 @@ npm install raspi-gpio
 ## Example Usage
 
 ```JavaScript
-const raspi = require('raspi');
 const gpio = require('raspi-gpio');
 
-raspi.init(() => {
-  const input = new gpio.DigitalInput({
-    pin: 'P1-3',
-    pullResistor: gpio.PULL_UP
-  });
-  const output = new gpio.DigitalOutput('P1-5');
-
-  output.write(input.read());
+const input = new gpio.DigitalInput({
+  pin: 'P1-3',
+  pullResistor: gpio.PULL_UP
 });
+
+const output = new gpio.DigitalOutput('P1-5');
+
+output.write(input.read());
 ```
 
 ## Pin Naming
@@ -118,14 +116,6 @@ _Arguments_:
           <td>pullResistor (optional)</td>
           <td><code>PULL_NONE</code> | <code>PULL_DOWN</code> | <code>PULL_UP</code></td>
           <td>Which internal pull resistor to enable, if any. Defaults to <code>PULL_NONE</code></td>
-        </tr>
-        <tr>
-          <td>enableListener</td>
-          <td>Boolean</td>
-          <td>Indicates whether or not to enable the interrupt listener. When enabled, the pin instance will emit <code>change</code> events on both rising and falling edges. Defaults to <code>true</code>.
-
-            <strong>Note:</strong> When this flag is enabled, <code>require</code>ing this module will prevent your application from exiting implicitly on its own. If you want to exit your program, you must explicitly call <code>process.exit()</code>.
-          </td>
         </tr>
       </table>
     </td>

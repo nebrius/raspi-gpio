@@ -1,20 +1,23 @@
 {
   "name": "raspi-gpio",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
   "dependencies": {
-    "nan": "^2.4.0",
-    "raspi-peripheral": "^1.6.3"
+    "raspi-peripheral": "^1.6.4",
+    "raspi-board": "^4.2.0",
+    "pigpio": "^0.5.1"
   },
   "devDependencies": {
-    "tslint": "^4.0.2",
-    "typescript": "^2.0.10",
-    "@types/node": "^0.0.2"
+    "@types/node": "^7.0.13",
+    "@types/pigpio": "^0.4.1",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2"
   },
   "scripts": {
     "prebuild": "tslint src/**/*.ts",
+    "preinstall": "sh ./script/pigpio.sh",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,7 +32,6 @@
   ],
   "author": "Bryan Hughes <bryan@nebri.us>",
   "license": "MIT",
-  "gypfile": true,
   "bugs": {
     "url": "https://github.com/nebrius/raspi-gpio/issues"
   },
