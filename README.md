@@ -122,6 +122,14 @@ _Arguments_:
   </tr>
 </table>
 
+### DigitalInput Instance Properties
+
+#### value (read-only)
+
+The current value on the pin.
+
+_Type:_ `LOW | HIGH`
+
 ### DigitalInput Instance Methods
 
 #### read()
@@ -181,7 +189,7 @@ _Arguments_:
 
 #### on('change', function(value))
 
-Fired whenever the value of the GPIO pin changes
+Fired whenever the value of the GPIO pin changes.
 
 _Callback Arguments_:
 
@@ -199,6 +207,14 @@ _Callback Arguments_:
     <td>The data read from the serial port.</td>
   </tr>
 </table>
+
+### DigitalOutput Instance Properties
+
+#### value (read-only)
+
+The current value on the pin, equal to the previous written value.
+
+_Type:_ `LOW | HIGH`
 
 ### DigitalOutput Instance Methods
 

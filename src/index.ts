@@ -75,8 +75,11 @@ function getPin(alias: string | number, pin: number): number {
 export class DigitalOutput extends Peripheral {
 
   private output: Gpio;
+  private currentValue: number;
 
-  public value: number;
+  public get value() {
+    return this.currentValue;
+  }
 
   constructor(config: number | string | IConfig) {
     const parsedConfig = parseConfig(config);
@@ -94,7 +97,7 @@ export class DigitalOutput extends Peripheral {
     if ([LOW, HIGH].indexOf(value) === -1) {
       throw new Error('Invalid write value ' + value);
     }
-    this.value = value;
+    this.currentValue = value;
     this.output.digitalWrite(this.value);
     this.emit('change', this.value);
   }
@@ -103,8 +106,11 @@ export class DigitalOutput extends Peripheral {
 export class DigitalInput extends Peripheral {
 
   private input: Gpio;
+  private currentValue: number;
 
-  public value: number;
+  public get value() {
+    return this.currentValue;
+  }
 
   constructor(config: number | string | IConfig) {
     const parsedConfig = parseConfig(config);
@@ -115,17 +121,17 @@ export class DigitalInput extends Peripheral {
     });
     this.input.enableInterrupt(Gpio.EITHER_EDGE);
     this.input.on('interrupt', (level: number) => setTimeout(() => {
-      this.value = level;
+      this.currentValue = level;
       this.emit('change', this.value);
     }));
-    this.value = this.input.digitalRead();
+    this.currentValue = this.input.digitalRead();
   }
 
   public read(): number {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');
     }
-    this.value = this.input.digitalRead();
+    this.currentValue = this.input.digitalRead();
     return this.value;
   }
 }

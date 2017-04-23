@@ -10,13 +10,15 @@ export declare const PULL_DOWN: number;
 export declare const PULL_UP: number;
 export declare class DigitalOutput extends Peripheral {
     private output;
-    value: number;
+    private currentValue;
+    readonly value: number;
     constructor(config: number | string | IConfig);
     write(value: number): void;
 }
 export declare class DigitalInput extends Peripheral {
     private input;
-    value: number;
+    private currentValue;
+    readonly value: number;
     constructor(config: number | string | IConfig);
     read(): number;
 }

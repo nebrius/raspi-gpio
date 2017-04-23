@@ -1,3 +1,7 @@
+## 4.0.1 (2017-4-22)
+
+- Fixed an issue with access for the `value` property.
+
 ## 4.0.0 (2017-4-22)
 
 - Rewrote raspi-gpio to use [pigpio](https://github.com/fivdi/pigpio) instead of Wiring Pi

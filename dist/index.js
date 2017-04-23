@@ -82,6 +82,13 @@ var DigitalOutput = (function (_super) {
         });
         return _this;
     }
+    Object.defineProperty(DigitalOutput.prototype, "value", {
+        get: function () {
+            return this.currentValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DigitalOutput.prototype.write = function (value) {
         if (!this.alive) {
             throw new Error('Attempted to write to a destroyed peripheral');
@@ -89,7 +96,7 @@ var DigitalOutput = (function (_super) {
         if ([exports.LOW, exports.HIGH].indexOf(value) === -1) {
             throw new Error('Invalid write value ' + value);
         }
-        this.value = value;
+        this.currentValue = value;
         this.output.digitalWrite(this.value);
         this.emit('change', this.value);
     };
@@ -108,17 +115,24 @@ var DigitalInput = (function (_super) {
         });
         _this.input.enableInterrupt(pigpio_1.Gpio.EITHER_EDGE);
         _this.input.on('interrupt', function (level) { return setTimeout(function () {
-            _this.value = level;
+            _this.currentValue = level;
             _this.emit('change', _this.value);
         }); });
-        _this.value = _this.input.digitalRead();
+        _this.currentValue = _this.input.digitalRead();
         return _this;
     }
+    Object.defineProperty(DigitalInput.prototype, "value", {
+        get: function () {
+            return this.currentValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DigitalInput.prototype.read = function () {
         if (!this.alive) {
             throw new Error('Attempted to read from a destroyed peripheral');
         }
-        this.value = this.input.digitalRead();
+        this.currentValue = this.input.digitalRead();
         return this.value;
     };
     return DigitalInput;

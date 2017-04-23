@@ -1,6 +1,6 @@
 {
   "name": "raspi-gpio",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
