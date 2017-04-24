@@ -17,23 +17,44 @@ Install with NPM:
 npm install raspi-gpio
 ```
 
-**Warning:** this module requires GCC 4.8 or newer. This means that you should be running Raspbian Jessie or newer, released in September of 2015.
-
 **Note:** this project is written in [TypeScript](http://www.typescriptlang.org/) and includes type definitions in the package.json file. This means that if you want to use it from TypeScript, you don't need to install a separate @types module.
 
 ## Example Usage
 
+In TypeScript/ES6:
+
+```TypeScript
+import { init } from 'raspi';
+import { DigitalInput, DigitalOutput, PULL_UP } from 'raspi-gpio';
+
+init(() => {
+  const input = new DigitalInput({
+    pin: 'P1-3',
+    pullResistor: PULL_UP
+  });
+
+  const output = new DigitalOutput('P1-5');
+
+  output.write(input.read());
+});
+```
+
+In JavaScript:
+
 ```JavaScript
+const raspi = require('raspi');
 const gpio = require('raspi-gpio');
 
-const input = new gpio.DigitalInput({
-  pin: 'P1-3',
-  pullResistor: gpio.PULL_UP
+raspi.init(() => {
+  const input = new gpio.DigitalInput({
+    pin: 'P1-3',
+    pullResistor: gpio.PULL_UP
+  });
+
+  const output = new gpio.DigitalOutput('P1-5');
+
+  output.write(input.read());
 });
-
-const output = new gpio.DigitalOutput('P1-5');
-
-output.write(input.read());
 ```
 
 ## Pin Naming

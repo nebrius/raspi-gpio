@@ -1,3 +1,7 @@
+## 4.0.2 (2017-4-23)
+
+- Fixed some important documentation bugs.
+
 ## 4.0.1 (2017-4-22)
 
 - Fixed an issue with access for the `value` property.
