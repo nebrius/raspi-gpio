@@ -1,3 +1,4 @@
+"use strict";
 /*
 The MIT License (MIT)
 
@@ -21,7 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -128,6 +128,10 @@ var DigitalInput = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    DigitalInput.prototype.destroy = function () {
+        this.input.disableInterrupt();
+        _super.prototype.destroy.call(this);
+    };
     DigitalInput.prototype.read = function () {
         if (!this.alive) {
             throw new Error('Attempted to read from a destroyed peripheral');

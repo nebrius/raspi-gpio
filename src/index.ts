@@ -127,6 +127,11 @@ export class DigitalInput extends Peripheral {
     this.currentValue = this.input.digitalRead();
   }
 
+  public destroy() {
+    this.input.disableInterrupt();
+    super.destroy();
+  }
+
   public read(): number {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');

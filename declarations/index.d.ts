@@ -20,5 +20,6 @@ export declare class DigitalInput extends Peripheral {
     private currentValue;
     readonly value: number;
     constructor(config: number | string | IConfig);
+    destroy(): void;
     read(): number;
 }

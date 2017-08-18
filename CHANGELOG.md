@@ -1,3 +1,8 @@
+## 4.1.0 (2017-8-18)
+
+- Added an override of the `destroy()` method that disables interrupts for the pin.
+    - This fixes a bug where creating a new peripheral on top of an old one _may_ have prevented Node.js from exiting properly.
+
 ## 4.0.2 (2017-4-23)
 
 - Fixed some important documentation bugs.
