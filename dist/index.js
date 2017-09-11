@@ -2,7 +2,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014 Bryan Hughes <bryan@nebri.us>
+Copyright (c) 2014-2017 Bryan Hughes <bryan@nebri.us>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -70,13 +70,13 @@ function getPin(alias, pin) {
     }
     return gpioPin;
 }
-var DigitalOutput = (function (_super) {
+var DigitalOutput = /** @class */ (function (_super) {
     __extends(DigitalOutput, _super);
     function DigitalOutput(config) {
         var _this = this;
         var parsedConfig = parseConfig(config);
         _this = _super.call(this, parsedConfig.pin) || this;
-        _this.output = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
+        _this._output = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
             mode: pigpio_1.Gpio.OUTPUT,
             pullUpDown: parsedConfig.pullResistor
         });
@@ -84,7 +84,7 @@ var DigitalOutput = (function (_super) {
     }
     Object.defineProperty(DigitalOutput.prototype, "value", {
         get: function () {
-            return this.currentValue;
+            return this._currentValue;
         },
         enumerable: true,
         configurable: true
@@ -96,47 +96,47 @@ var DigitalOutput = (function (_super) {
         if ([exports.LOW, exports.HIGH].indexOf(value) === -1) {
             throw new Error('Invalid write value ' + value);
         }
-        this.currentValue = value;
-        this.output.digitalWrite(this.value);
+        this._currentValue = value;
+        this._output.digitalWrite(this.value);
         this.emit('change', this.value);
     };
     return DigitalOutput;
 }(raspi_peripheral_1.Peripheral));
 exports.DigitalOutput = DigitalOutput;
-var DigitalInput = (function (_super) {
+var DigitalInput = /** @class */ (function (_super) {
     __extends(DigitalInput, _super);
     function DigitalInput(config) {
         var _this = this;
         var parsedConfig = parseConfig(config);
         _this = _super.call(this, parsedConfig.pin) || this;
-        _this.input = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
+        _this._input = new pigpio_1.Gpio(getPin(parsedConfig.pin, _this.pins[0]), {
             mode: pigpio_1.Gpio.INPUT,
             pullUpDown: parsedConfig.pullResistor
         });
-        _this.input.enableInterrupt(pigpio_1.Gpio.EITHER_EDGE);
-        _this.input.on('interrupt', function (level) { return setTimeout(function () {
-            _this.currentValue = level;
+        _this._input.enableInterrupt(pigpio_1.Gpio.EITHER_EDGE);
+        _this._input.on('interrupt', function (level) { return setTimeout(function () {
+            _this._currentValue = level;
             _this.emit('change', _this.value);
         }); });
-        _this.currentValue = _this.input.digitalRead();
+        _this._currentValue = _this._input.digitalRead();
         return _this;
     }
     Object.defineProperty(DigitalInput.prototype, "value", {
         get: function () {
-            return this.currentValue;
+            return this._currentValue;
         },
         enumerable: true,
         configurable: true
     });
     DigitalInput.prototype.destroy = function () {
-        this.input.disableInterrupt();
+        this._input.disableInterrupt();
         _super.prototype.destroy.call(this);
     };
     DigitalInput.prototype.read = function () {
         if (!this.alive) {
             throw new Error('Attempted to read from a destroyed peripheral');
         }
-        this.currentValue = this.input.digitalRead();
+        this._currentValue = this._input.digitalRead();
         return this.value;
     };
     return DigitalInput;

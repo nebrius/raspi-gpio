@@ -1,3 +1,14 @@
+## 5.0.0 (2017-
+
+- POTENTIALLY BREAKING CHANGE: renamed the following private properties to begin with an underscore because I just learned TypeScript doesn't do anything to hide private properties. Don't use these properties, changes may not be semver-major next time.
+    - `DigitalInput.input` -> `DigitalInput._input`
+    - `DigitalInput.currentValue` -> `DigitalInput._currentValue`
+    - `DigitalOutput.output` -> `DigitalOutput._output`
+    - `DigitalOutput.currentValue` -> `DigitalOutput._currentValue`
+- BREAKING CHANGE: dropped support for Node.js < 4.0.0, and now enforce it via package.json "engines" field.
+- SORT OF BREAKING-ISH CHANGE: dropped support for attempting to install on non-arm platforms via package.json's "cpu" field.
+    - Attempting to install this on a non-Raspberry Pi platform before gave a bunch of obtuse errors, so this doesn't _actually_ change the ability to install raspi-gpio, but does make it fail earlier and harder.
+
 ## 4.1.0 (2017-8-18)
 
 - Added an override of the `destroy()` method that disables interrupts for the pin.

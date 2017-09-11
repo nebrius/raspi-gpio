@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014 Bryan Hughes <bryan@nebri.us>
+Copyright (c) 2014-2017 Bryan Hughes <bryan@nebri.us>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -74,17 +74,17 @@ function getPin(alias: string | number, pin: number): number {
 
 export class DigitalOutput extends Peripheral {
 
-  private output: Gpio;
-  private currentValue: number;
+  private _output: Gpio;
+  private _currentValue: number;
 
   public get value() {
-    return this.currentValue;
+    return this._currentValue;
   }
 
   constructor(config: number | string | IConfig) {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
-    this.output = new Gpio(getPin(parsedConfig.pin, this.pins[0]), {
+    this._output = new Gpio(getPin(parsedConfig.pin, this.pins[0]), {
       mode: Gpio.OUTPUT,
       pullUpDown: parsedConfig.pullResistor
     });
@@ -97,38 +97,38 @@ export class DigitalOutput extends Peripheral {
     if ([LOW, HIGH].indexOf(value) === -1) {
       throw new Error('Invalid write value ' + value);
     }
-    this.currentValue = value;
-    this.output.digitalWrite(this.value);
+    this._currentValue = value;
+    this._output.digitalWrite(this.value);
     this.emit('change', this.value);
   }
 }
 
 export class DigitalInput extends Peripheral {
 
-  private input: Gpio;
-  private currentValue: number;
+  private _input: Gpio;
+  private _currentValue: number;
 
   public get value() {
-    return this.currentValue;
+    return this._currentValue;
   }
 
   constructor(config: number | string | IConfig) {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
-    this.input = new Gpio(getPin(parsedConfig.pin, this.pins[0]), {
+    this._input = new Gpio(getPin(parsedConfig.pin, this.pins[0]), {
       mode: Gpio.INPUT,
       pullUpDown: parsedConfig.pullResistor
     });
-    this.input.enableInterrupt(Gpio.EITHER_EDGE);
-    this.input.on('interrupt', (level: number) => setTimeout(() => {
-      this.currentValue = level;
+    this._input.enableInterrupt(Gpio.EITHER_EDGE);
+    this._input.on('interrupt', (level: number) => setTimeout(() => {
+      this._currentValue = level;
       this.emit('change', this.value);
     }));
-    this.currentValue = this.input.digitalRead();
+    this._currentValue = this._input.digitalRead();
   }
 
   public destroy() {
-    this.input.disableInterrupt();
+    this._input.disableInterrupt();
     super.destroy();
   }
 
@@ -136,7 +136,7 @@ export class DigitalInput extends Peripheral {
     if (!this.alive) {
       throw new Error('Attempted to read from a destroyed peripheral');
     }
-    this.currentValue = this.input.digitalRead();
+    this._currentValue = this._input.digitalRead();
     return this.value;
   }
 }
