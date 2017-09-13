@@ -1,4 +1,4 @@
-## 5.0.0 (2017-
+## 5.0.0 (2017-9-12)
 
 - POTENTIALLY BREAKING CHANGE: renamed the following private properties to begin with an underscore because I just learned TypeScript doesn't do anything to hide private properties. Don't use these properties, changes may not be semver-major next time.
     - `DigitalInput.input` -> `DigitalInput._input`
