@@ -5,7 +5,7 @@ Raspi GPIO
 
 Raspi GPIO is part of the [Raspi.js suite of libraries](https://github.com/nebrius/raspi) that provides access to the hardware GPIO pins on a Raspberry Pi.
 
-If you have a bug report, feature request, or wish to contribute code, please be sure to check out the [Contributing Guide](blob/master/CONTRIBUTING.md).
+If you have a bug report, feature request, or wish to contribute code, please be sure to check out the [Raspi IO Contributing Guide](https://github.com/nebrius/raspi-io/blob/master/CONTRIBUTING.md).
 
 ## System Requirements
 
