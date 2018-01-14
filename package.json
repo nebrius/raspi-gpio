@@ -5,15 +5,17 @@
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
   "dependencies": {
-    "raspi-peripheral": "^2.0.0",
-    "raspi-board": "^5.0.0",
-    "pigpio": "^0.6.1"
+    "raspi-peripheral": "^2.0.1",
+    "raspi-board": "^5.0.2",
+    "pigpio": "^0.6.4"
   },
   "devDependencies": {
-    "@types/node": "^8.0.28",
+    "@types/node": "^9.3.0",
     "@types/pigpio": "^0.4.1",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "@types/raspi-board": "^5.0.0",
+    "@types/raspi-peripheral": "^2.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.6.2"
   },
   "engines": {
     "node": ">= 4.0.0"
