@@ -24,7 +24,7 @@
     "arm"
   ],
   "scripts": {
-    "prebuild": "tslint src/**/*.ts",
+    "prebuild": "tslint 'src/**/*.ts'",
     "preinstall": "sh ./script/pigpio.sh",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
