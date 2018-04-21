@@ -1,13 +1,13 @@
 {
   "name": "raspi-gpio",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
   "dependencies": {
     "raspi-peripheral": "^2.0.1",
     "raspi-board": "^5.0.2",
-    "pigpio": "^0.6.4"
+    "pigpio": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^9.3.0",
@@ -18,7 +18,7 @@
     "typescript": "^2.6.2"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 6.4.0"
   },
   "cpu": [
     "arm"
