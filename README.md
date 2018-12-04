@@ -106,6 +106,47 @@ Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki
     <td>PULL_UP</td>
     <td>Use the internal pull up resistor for a pin, one of the three possible values for the <code>pullResistor</code> in the pin configuration object.</td>
   </tr>
+  <tr>
+    <td>module</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>PULL_NONE</td>
+        <td>Constant</td>
+        <td>Alias of PULL_NONE module export.</td>
+      </tr>
+      <tr>
+        <td>PULL_DOWN</td>
+        <td>Constant</td>
+        <td>Alias of PULL_DOWN module export.</td>
+      </tr>
+      <tr>
+        <td>PULL_UP</td>
+        <td>Constant</td>
+        <td>Alias of PULL_UP module export.</td>
+      </tr>
+      <tr>
+        <td>createDigitaInput(config)</td>
+        <td>String | Number | Object</td>
+        <td>See the <a href="new-digitalinputconfig">DigitalInput constructor</a> for details</td>
+      </tr>
+      <tr>
+        <td>createDigitaOutput(config)</td>
+        <td>String | Number | Object</td>
+        <td>See the <a href="new-digitaloutputconfig">DigitalOutput constructor</a> for details</td>
+      </tr>
+    </table></td>
+  </tr>
 </table>
 
 ### new DigitalInput(config)
@@ -171,6 +212,29 @@ _Arguments_: None
 
 _Returns_: `LOW` or `HIGH`
 
+### DigitalInput Instance Events
+
+#### on('change', function(value))
+
+Fired whenever the value of the GPIO pin changes.
+
+_Callback Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>value</td>
+    <td><code>LOW</code> | <code>HIGH</code></td>
+    <td>The current value of the GPIO pin.</td>
+  </tr>
+</table>
+
 ### new DigitalOutput(config)
 
 Instantiates a new GPIO output instance.
@@ -216,29 +280,6 @@ _Arguments_:
   </tr>
 </table>
 
-### DigitalInput Instance Events
-
-#### on('change', function(value))
-
-Fired whenever the value of the GPIO pin changes.
-
-_Callback Arguments_:
-
-<table>
-  <thead>
-    <tr>
-      <th>Argument</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td>value</td>
-    <td><code>LOW</code> | <code>HIGH</code></td>
-    <td>The data read from the serial port.</td>
-  </tr>
-</table>
-
 ### DigitalOutput Instance Properties
 
 #### value (read-only)
@@ -271,6 +312,29 @@ _Arguments_:
 </table>
 
 _Returns_: None
+
+### DigitalOutput Instance Events
+
+#### on('change', function(value))
+
+Fired whenever the value of the GPIO pin changes.
+
+_Callback Arguments_:
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>value</td>
+    <td><code>LOW</code> | <code>HIGH</code></td>
+    <td>The current value of the GPIO pin.</td>
+  </tr>
+</table>
 
 License
 =======

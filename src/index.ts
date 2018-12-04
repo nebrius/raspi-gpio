@@ -25,6 +25,7 @@ THE SOFTWARE.
 import { Peripheral } from 'raspi-peripheral';
 import { Gpio } from 'pigpio';
 import { getGpioNumber } from 'raspi-board';
+import { IDigitalInput, IDigitalOutput, IGPIOModule } from 'core-io-types';
 
 export interface IConfig {
   pin: number | string;
@@ -72,7 +73,7 @@ function getPin(alias: string | number, pin: number): number {
   return gpioPin;
 }
 
-export class DigitalOutput extends Peripheral {
+export class DigitalOutput extends Peripheral implements IDigitalOutput {
 
   private _output: Gpio;
   private _currentValue: number;
@@ -88,6 +89,7 @@ export class DigitalOutput extends Peripheral {
       mode: Gpio.OUTPUT,
       pullUpDown: parsedConfig.pullResistor
     });
+    this._currentValue = this._output.digitalRead();
   }
 
   public write(value: number): void {
@@ -103,7 +105,7 @@ export class DigitalOutput extends Peripheral {
   }
 }
 
-export class DigitalInput extends Peripheral {
+export class DigitalInput extends Peripheral implements IDigitalInput {
 
   private _input: Gpio;
   private _currentValue: number;
@@ -140,3 +142,15 @@ export class DigitalInput extends Peripheral {
     return this.value;
   }
 }
+
+export const module: IGPIOModule = {
+  PULL_DOWN,
+  PULL_UP,
+  PULL_NONE,
+  createDigitalInput(config) {
+    return new DigitalInput(config);
+  },
+  createDigitalOutput(config) {
+    return new DigitalOutput(config);
+  }
+};

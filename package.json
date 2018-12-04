@@ -1,21 +1,22 @@
 {
   "name": "raspi-gpio",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
   "dependencies": {
-    "raspi-peripheral": "^2.0.1",
-    "raspi-board": "^5.0.2",
-    "pigpio": "^1.0.0"
+    "pigpio": "^1.2.0",
+    "raspi-board": "^6.1.0",
+    "raspi-peripheral": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^9.3.0",
-    "@types/pigpio": "^0.4.1",
+    "@types/node": "^10.12.12",
+    "@types/pigpio": "^1.2.0",
     "@types/raspi-board": "^5.0.0",
     "@types/raspi-peripheral": "^2.0.0",
+    "core-io-types": "^1.0.0",
     "tslint": "^5.9.1",
-    "typescript": "^2.6.2"
+    "typescript": "^3.1.6"
   },
   "engines": {
     "node": ">= 6.4.0"

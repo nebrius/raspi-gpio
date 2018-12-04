@@ -1,3 +1,10 @@
+## 6.1.0 (2018-12-3)
+
+- Updated build tools to latest versions
+- Reworked the code to be based on core-io-types (no functionality change, just TypeScript changes)
+- Added the `module` export that conforms to core-io-types `IGPIOModule` interface, which makes it easier to pass this entire module all at once as an argument/variable.
+- Fixed a bug where `DigitalOutput.value` contains a garbage value prior to the first `write` call.
+
 ## 6.0.0 (2018-4-21)
 
 - Updated to pigpio 1
