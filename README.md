@@ -108,7 +108,7 @@ Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki
   </tr>
   <tr>
     <td>module</td>
-    <td></td>
+    <td>An easily consumable object for indirectly passing this module around. Intended specifically for use by Core IO (details coming soon)</td>
   </tr>
   <tr>
     <td></td>
@@ -138,12 +138,12 @@ Be sure to read the [full list of pins](https://github.com/nebrius/raspi-io/wiki
       <tr>
         <td>createDigitaInput(config)</td>
         <td>String | Number | Object</td>
-        <td>See the <a href="new-digitalinputconfig">DigitalInput constructor</a> for details</td>
+        <td>See the <a href="#new-digitalinputconfig">DigitalInput constructor</a> for details</td>
       </tr>
       <tr>
         <td>createDigitaOutput(config)</td>
         <td>String | Number | Object</td>
-        <td>See the <a href="new-digitaloutputconfig">DigitalOutput constructor</a> for details</td>
+        <td>See the <a href="#new-digitaloutputconfig">DigitalOutput constructor</a> for details</td>
       </tr>
     </table></td>
   </tr>
@@ -286,7 +286,7 @@ _Arguments_:
 
 The current value on the pin, equal to the previous written value.
 
-_Type:_ `LOW | HIGH`
+_Type:_ `LOW` | `HIGH`
 
 ### DigitalOutput Instance Methods
 
@@ -306,7 +306,7 @@ _Arguments_:
   </thead>
   <tr>
     <td>value</td>
-    <td><code>HIGH</code> | <code>LOW</code></td>
+    <td><code>LOW</code> | <code>HIGH</code></td>
     <td>The value to write to the pin</td>
   </tr>
 </table>
