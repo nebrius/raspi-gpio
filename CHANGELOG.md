@@ -1,3 +1,7 @@
+## 6.2.0 (2019-01-07)
+
+- Added `pullResistor` property to digital input
+
 ## 6.1.0 (2018-12-3)
 
 - Updated build tools to latest versions

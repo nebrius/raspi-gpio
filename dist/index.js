@@ -93,6 +93,7 @@ class DigitalInput extends raspi_peripheral_1.Peripheral {
     constructor(config) {
         const parsedConfig = parseConfig(config);
         super(parsedConfig.pin);
+        this.pullResistor = parsedConfig.pullResistor;
         this._input = new pigpio_1.Gpio(getPin(parsedConfig.pin, this.pins[0]), {
             mode: pigpio_1.Gpio.INPUT,
             pullUpDown: parsedConfig.pullResistor

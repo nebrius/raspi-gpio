@@ -107,16 +107,19 @@ export class DigitalOutput extends Peripheral implements IDigitalOutput {
 
 export class DigitalInput extends Peripheral implements IDigitalInput {
 
-  private _input: Gpio;
-  private _currentValue: number;
+  public readonly pullResistor: number;
 
   public get value() {
     return this._currentValue;
   }
 
+  private _input: Gpio;
+  private _currentValue: number;
+
   constructor(config: number | string | IConfig) {
     const parsedConfig = parseConfig(config);
     super(parsedConfig.pin);
+    this.pullResistor = parsedConfig.pullResistor;
     this._input = new Gpio(getPin(parsedConfig.pin, this.pins[0]), {
       mode: Gpio.INPUT,
       pullUpDown: parsedConfig.pullResistor

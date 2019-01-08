@@ -17,9 +17,10 @@ export declare class DigitalOutput extends Peripheral implements IDigitalOutput 
     write(value: number): void;
 }
 export declare class DigitalInput extends Peripheral implements IDigitalInput {
+    readonly pullResistor: number;
+    readonly value: number;
     private _input;
     private _currentValue;
-    readonly value: number;
     constructor(config: number | string | IConfig);
     destroy(): void;
     read(): number;
