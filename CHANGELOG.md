@@ -1,3 +1,7 @@
+## 6.2.1 (2019-2-20)
+
+- Updated dependencies
+
 ## 6.2.0 (2019-01-07)
 
 - Added `pullResistor` property to digital input

@@ -1,5 +1,5 @@
 import { Peripheral } from 'raspi-peripheral';
-import { IDigitalInput, IDigitalOutput, IGPIOModule } from 'core-io-types';
+import { IDigitalInput, IDigitalOutput, IGPIOModule } from 'j5-io-types';
 export interface IConfig {
     pin: number | string;
     pullResistor?: number;

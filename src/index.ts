@@ -25,7 +25,7 @@ THE SOFTWARE.
 import { Peripheral } from 'raspi-peripheral';
 import { Gpio } from 'pigpio';
 import { getGpioNumber } from 'raspi-board';
-import { IDigitalInput, IDigitalOutput, IGPIOModule } from 'core-io-types';
+import { IDigitalInput, IDigitalOutput, IGPIOModule } from 'j5-io-types';
 
 export interface IConfig {
   pin: number | string;
