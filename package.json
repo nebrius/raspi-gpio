@@ -1,6 +1,6 @@
 {
   "name": "raspi-gpio",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Provides access to GPIO on the Raspberry Pi from Node.js",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
@@ -22,7 +22,8 @@
     "node": ">= 6.4.0"
   },
   "cpu": [
-    "arm"
+    "arm",
+    "arm64"
   ],
   "scripts": {
     "prebuild": "tslint 'src/**/*.ts'",
